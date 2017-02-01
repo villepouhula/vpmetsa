@@ -1,0 +1,29 @@
+{{outlet}}
+
+<div class="side-overlay">
+    <div class="buttons">
+        {{#paper-button raised=true mini=true onClick=(action "getPos")}}{{paper-icon "gps-fixed"}}{{/paper-button}}
+        {{#paper-button raised=true mini=true onClick=(action "zoomIn")}}{{paper-icon "add-circle-outline"}}{{/paper-button}}
+        {{#paper-button raised=true mini=true onClick=(action "zoomOut")}}{{paper-icon "remove-circle-outline"}}{{/paper-button}}
+    </div>
+</div>
+
+<div class="bottom-overlay">
+    <div class="buttons">
+
+        {{#paper-sidenav-toggle name="left" as |toggleAction|}}
+
+            {{#paper-button raised=true mini=true onClick=(action toggleAction)}}{{paper-icon "reorder"}}{{/paper-button}}
+        {{/paper-sidenav-toggle}}
+    </div>
+</div>
+
+{{#leaflet-map id="map" lat=lat lng=lng zoom=zoom zoomControl=false onMoveend=(action "updateCenter")}}
+    {{tile-layer url="http://tiles.kartat.kapsi.fi/peruskartta/{z}/{x}/{y}.jpg" }}
+
+    {{#marker-layer location=own}}
+        {{#popup-layer}}
+            Täsä sää oot
+        {{/popup-layer}}
+    {{/marker-layer}}
+{{/leaflet-map}}
