@@ -17,6 +17,13 @@ export default Ember.Controller.extend({
         });
     },
 
+    findUsersNearby: function() {
+        console.log("finding users..");
+        console.log("lat:" +this.get("lat"));
+        console.log("lng:" +this.get("lng"));
+        console.log("zoom:" +this.get("zoom"));
+    },
+
     actions: {
         getPos() {
             let self = this;
@@ -34,8 +41,12 @@ export default Ember.Controller.extend({
         },
         updateCenter(e) {
             let center = e.target.getCenter();
+            console.log(e.target.getZoom());
             this.set('lat', center.lat);
             this.set('lng', center.lng);
+            this.set('zoom', e.target.getZoom());
+
+            this.findUsersNearby();
         }
     }
 });

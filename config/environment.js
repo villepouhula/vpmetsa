@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'metsa2020',
     environment: environment,
-    rootURL: '/',
+    rootURL: '/metsa2020/dist/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {

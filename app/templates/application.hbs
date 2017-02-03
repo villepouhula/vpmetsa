@@ -1,36 +1,41 @@
 <div class="lock-screen">
     {{#paper-sidenav-container class="inner-sidenav"}}
         {{#paper-sidenav
-                class="md-whiteframe-z2"
-                name="left"
-                open=leftSideBarOpen
-                onToggle=(action (mut leftSideBarOpen))
+            class="md-whiteframe-z2"
+            name="left"
+            open=leftSideBarOpen
+            onToggle=(action (mut leftSideBarOpen))
+            lockedOpen=false
         }}
+
             {{#paper-toolbar as |toolbar|}}
-                {{#paper-toolbar-tools}}Left Sidenav{{/paper-toolbar-tools}}
+                {{#paper-toolbar-tools}}Menu{{/paper-toolbar-tools}}
             {{/paper-toolbar}}
             {{#paper-content padding=true}}
-                Çup?
+                {{#paper-list}}
+                    {{#paper-item onClick=(action "toggleShare") as |controls|}}
+                        {{paper-icon "network-wifi"}}
+                        <p>Jaa oma sijainti</p>
+                        {{controls.switch secondary=true value=shareEnabled onChange=(action (mut shareEnabled))}}
+                    {{/paper-item}}
+
+                    {{paper-divider}}
+
+                    {{#paper-item onClick=(action "transitionToProfile")}}
+                        {{paper-icon "account-circle"}}
+                        <p>Käyttäjä</p>
+                    {{/paper-item}}
+
+                    {{#paper-item onClick=(action "transitionToSettings")}}
+                        {{paper-icon "settings"}}
+                        <p>Asetukset</p>
+                    {{/paper-item}}
+                {{/paper-list}}
             {{/paper-content}}
         {{/paper-sidenav}}
 
-        {{#paper-card-content class="flex"}}
-            <div class="layout-fill layout-align-start-center layout-column" style="height: 500px">
-                <p>
-                    The left sidenav will "lock open" on a medium (>=960px wide) device.
-                </p>
-                <p>
-                    Left sidenav is {{if leftSideBarOpen "opened" "closed"}}
-                </p>
 
-                {{#paper-sidenav-toggle name="left" as |toggleAction|}}
-                    {{#paper-button raised=true classNames="hide-gt-sm" onClick=(action toggleAction)}}
-                        Toggle
-                    {{/paper-button}}
-                {{/paper-sidenav-toggle}}
+        {{outlet}}
 
-            </div>
-        {{/paper-card-content}}
     {{/paper-sidenav-container}}
-    {{outlet}}
 </div>

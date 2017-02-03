@@ -9,18 +9,24 @@
 </div>
 
 <div class="bottom-overlay">
-    <div class="buttons">
+    <div class="buttons layout-row">
+        <div class="flex">
+            {{#paper-sidenav-toggle name="left" as |toggleAction|}}
+                {{#paper-button raised=true mini=true onClick=(action toggleAction)}}{{paper-icon "reorder"}}{{/paper-button}}
+            {{/paper-sidenav-toggle}}
+            {{#if shareEnabled}}jee{{/if}}
+        </div>
 
-        {{#paper-sidenav-toggle name="left" as |toggleAction|}}
-
-            {{#paper-button raised=true mini=true onClick=(action toggleAction)}}{{paper-icon "reorder"}}{{/paper-button}}
-        {{/paper-sidenav-toggle}}
+        <div class="flex-nogrow share-on-icon">
+            {{paper-icon "speaker-phone" size=40}}
+        </div>
     </div>
+
 </div>
 
 {{#leaflet-map id="map" lat=lat lng=lng zoom=zoom zoomControl=false onMoveend=(action "updateCenter")}}
     {{tile-layer url="http://tiles.kartat.kapsi.fi/peruskartta/{z}/{x}/{y}.jpg" }}
-
+    {{!--{{tile-layer url="https://karttamoottori.maanmittauslaitos.fi/maasto/wmts/1.0.0/maastokartta/default/ETRS-TM35FIN/{z}/{x}/{y}.png"}}--}}
     {{#marker-layer location=own}}
         {{#popup-layer}}
             Täsä sää oot
