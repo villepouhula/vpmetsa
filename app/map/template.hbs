@@ -25,7 +25,7 @@
 </div>
 
 {{#leaflet-map id="map" lat=lat lng=lng zoom=zoom zoomControl=false onMoveend=(action "updateCenter")}}
-    {{tile-layer url="http://tiles.kartat.kapsi.fi/peruskartta/{z}/{x}/{y}.jpg" }}
+    {{tile-layer url="https://tiles.kartat.kapsi.fi/peruskartta/{z}/{x}/{y}.jpg" }}
     {{!--{{tile-layer url="https://karttamoottori.maanmittauslaitos.fi/maasto/wmts/1.0.0/maastokartta/default/ETRS-TM35FIN/{z}/{x}/{y}.png"}}--}}
     {{#marker-layer location=own}}
         {{#popup-layer}}
