@@ -1,35 +1,23 @@
 {{outlet}}
 
-<div class="side-overlay">
-    <div class="buttons">
-        {{#paper-button raised=true mini=true onClick=(action "getPos")}}{{paper-icon "gps-fixed"}}{{/paper-button}}
-        {{#paper-button raised=true mini=true onClick=(action "zoomIn")}}{{paper-icon "add-circle-outline"}}{{/paper-button}}
-        {{#paper-button raised=true mini=true onClick=(action "zoomOut")}}{{paper-icon "remove-circle-outline"}}{{/paper-button}}
-    </div>
-</div>
 
-<div class="bottom-overlay">
-    <div class="buttons layout-row">
-        <div class="flex">
-            {{#paper-sidenav-toggle name="left" as |toggleAction|}}
-                {{#paper-button raised=true mini=true onClick=(action toggleAction)}}{{paper-icon "reorder"}}{{/paper-button}}
-            {{/paper-sidenav-toggle}}
-            {{#if shareEnabled}}jee{{/if}}
-        </div>
+{{leaf-map}}
 
-        <div class="flex-nogrow share-on-icon">
-            {{paper-icon "speaker-phone" size=40}}
-        </div>
-    </div>
-
-</div>
-
-{{#leaflet-map id="map" lat=lat lng=lng zoom=zoom zoomControl=false onMoveend=(action "updateCenter")}}
-    {{tile-layer url="https://tiles.kartat.kapsi.fi/peruskartta/{z}/{x}/{y}.jpg" }}
-    {{!--{{tile-layer url="https://karttamoottori.maanmittauslaitos.fi/maasto/wmts/1.0.0/maastokartta/default/ETRS-TM35FIN/{z}/{x}/{y}.png"}}--}}
+{{!--
+{{#leaflet-map id="map" lat=lat lng=lng zoom=zoom zoomControl=false crs=crs continuousworld=true worldCopyJump=false onMoveend=(action "updateCenter") }}
+    {{tile-layer url="http://tiles.kartat.kapsi.fi/peruskartta/{z}/{x}/{y}.jpg" }}
+    {{tile-layer
+        url="https://{s}.kapsi.fi/mapcache/peruskartta_3067/{z}/{x}/{y}.png"
+        tilesize=256
+        tms=false
+        continuousworld=true
+        subdomains=subdomains
+    }}
+    {{tile-layer url="https://karttamoottori.maanmittauslaitos.fi/maasto/wmts/1.0.0/maastokartta/default/ETRS-TM35FIN/{z}/{x}/{y}.png"}}
     {{#marker-layer location=own}}
         {{#popup-layer}}
             Täsä sää oot
         {{/popup-layer}}
     {{/marker-layer}}
 {{/leaflet-map}}
+--}}

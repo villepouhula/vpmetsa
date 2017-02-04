@@ -1,0 +1,26 @@
+
+<div class="side-overlay">
+    <div class="buttons">
+        {{#paper-button raised=true mini=true onClick=(action "getPos")}}{{paper-icon "gps-fixed"}}{{/paper-button}}
+        {{#paper-button raised=true mini=true onClick=(action "zoomIn")}}{{paper-icon "add-circle-outline"}}{{/paper-button}}
+        {{#paper-button raised=true mini=true onClick=(action "zoomOut")}}{{paper-icon "remove-circle-outline"}}{{/paper-button}}
+    </div>
+</div>
+
+<div class="bottom-overlay">
+    <div class="buttons layout-row">
+        <div class="flex">
+            {{#paper-sidenav-toggle name="left" as |toggleAction|}}
+                {{#paper-button raised=true mini=true onClick=(action toggleAction)}}{{paper-icon "reorder"}}{{/paper-button}}
+            {{/paper-sidenav-toggle}}
+            {{#if shareEnabled}}jee{{/if}}
+        </div>
+
+        <div class="flex-nogrow share-on-icon">
+            {{paper-icon "speaker-phone" size=40}}
+        </div>
+    </div>
+
+</div>
+
+<div id="map"></div>

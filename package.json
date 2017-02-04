@@ -34,11 +34,13 @@
     "ember-cli-uglify": "^1.2.0",
     "ember-data": "^2.10.0",
     "ember-export-application-global": "^1.0.5",
-    "ember-leaflet": "3.0.9",
     "ember-load-initializers": "^0.5.1",
     "ember-paper": "1.0.0-alpha.15",
     "ember-resolver": "^2.0.3",
-    "loader.js": "^4.0.10"
+    "leaflet": "^1.0.3",
+    "loader.js": "^4.0.10",
+    "proj4": "^2.3.17",
+    "proj4leaflet": "^1.0.1"
   },
   "engines": {
     "node": ">= 0.12.0"
