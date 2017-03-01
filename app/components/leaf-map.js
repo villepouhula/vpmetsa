@@ -104,7 +104,7 @@ export default Ember.Component.extend({
         let self = this;
         let posarr = [];
 
-        let ownIcon = L.icon({
+        let userIcon = L.icon({
             iconUrl: 'img/leaflet/male-2.png',
 
             iconSize:     [32, 37], // size of the icon
@@ -121,7 +121,7 @@ export default Ember.Component.extend({
                     // console.log(latlng);
 
                     if(!self.layergroup){
-                        posarr.push(new L.marker(latlng));
+                        posarr.push(new L.marker(latlng, {icon: userIcon}));
                     } else {
                         self.layergroup.addLayer(new L.marker(latlng));
                     }
