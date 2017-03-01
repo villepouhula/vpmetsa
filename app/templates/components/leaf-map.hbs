@@ -13,7 +13,14 @@
             {{#paper-sidenav-toggle name="left" as |toggleAction|}}
                 {{#paper-button raised=true mini=true onClick=(action toggleAction)}}{{paper-icon "reorder"}}{{/paper-button}}
             {{/paper-sidenav-toggle}}
-            {{#if shareEnabled}}jee{{/if}}
+        </div>
+
+        <div class="flex-nogrow share-on-icon">
+            {{#if watchPos}}
+                <a {{action "getPos"}}>{{paper-icon "gps-fixed" size=40}}</a>
+            {{else}}
+                <span {{action "getPos"}}>{{paper-icon "gps-off" size=40}}</span>
+            {{/if}}
         </div>
 
         {{#if locationshare.enabled}}

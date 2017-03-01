@@ -42,6 +42,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
+      apiurl = "https://192.168.1.2:3333/api/";
   }
 
   if (environment === 'test') {

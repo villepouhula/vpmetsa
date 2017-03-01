@@ -1,13 +1,14 @@
 import Ember from 'ember';
+import config from '../config/environment';
 
 export default Ember.Component.extend({
     geolocation: Ember.inject.service(),
     locationshare: Ember.inject.service(),
 
-    lat: 62.732420,
-    lng: 29.866032,
+    lat: 62.7660262,
+    lng: 29.8923715,
     zoom: 13,
-    own: [62.732420, 29.866032],
+    own: [62.7660262, 29.8923715],
 
     init: function() {
         this._super();
@@ -16,7 +17,11 @@ export default Ember.Component.extend({
             self.set("lat", geoObject.coords.latitude);
             self.set("lng", geoObject.coords.longitude);
             self.set("own", [geoObject.coords.latitude, geoObject.coords.longitude]);
+
         });
+
+        L.Icon.Default.imagePath = 'img/leaflet';
+
     },
 
     didInsertElement: function() {
@@ -66,20 +71,103 @@ export default Ember.Component.extend({
                 subdomains: ['tile1','tile2']
             });
 
+
+        let ownIcon = L.icon({
+            iconUrl: 'img/leaflet/male-2.png',
+
+            iconSize:     [32, 37], // size of the icon
+            iconAnchor:   [16, 37], // point of the icon which will correspond to marker's location
+        });
+
+        let ownpos = new L.marker(this.get("own"), {icon: ownIcon});
+        this.set("own_pos_marker", ownpos);
+
         this.get("map").addLayer(tilelayer);
         this.get("map").setView(this.get("own"), this.get("zoom"));
+
+
+
+        this.get("map").on('zoomend', this.findUsersNearby);
+        this.get("map").on('moveend', this.findUsersNearby);
+
+    },
+
+    findUsersNearby: function(e) {
+
+        let data = {
+            sw_lat: e.target.getBounds()._southWest.lat,
+            sw_lng: e.target.getBounds()._southWest.lng,
+            ne_lat: e.target.getBounds()._northEast.lat,
+            ne_lng: e.target.getBounds()._northEast.lng
+        }
+
+        let self = this;
+        let posarr = [];
+
+
+        Ember.$.get( config.APP.API_URL+"findUsers", data)
+            .done (function( result ) {
+                if(self.layergroup){
+                    self.layergroup.clearLayers();
+                }
+                result.forEach(function(row) {
+                    let latlng = [row.loc[1],row.loc[0]];
+                    // console.log(latlng);
+
+                    if(!self.layergroup){
+                        posarr.push(new L.marker(latlng));
+                    } else {
+                        self.layergroup.addLayer(new L.marker(latlng));
+                    }
+
+                });
+
+                if(!self.layergroup){
+                    self.layergroup = new L.layerGroup(posarr).addTo(self);
+                }
+
+            });
+    },
+
+    getPos: function() {
+        console.log("update position..");
+
+        this.get("map").addLayer(this.get("own_pos_marker"));
+
+        let self = this;
+        this.get('geolocation').getLocation().then(function(geoObject) {
+            self.set("lat", geoObject.coords.latitude);
+            self.set("lng", geoObject.coords.longitude);
+            self.set("own", [geoObject.coords.latitude, geoObject.coords.longitude]);
+
+            self.get("map").setView(self.get("own"), self.get("zoom"));
+
+
+            self.get("own_pos_marker").setOpacity(100);
+            self.get("own_pos_marker").setLatLng([geoObject.coords.latitude, geoObject.coords.longitude]);
+
+            self._posWatcher = Ember.run.later(this, () => {
+                console.log("run again");
+                self.getPos();
+            }, 5000);
+
+            self.set("_posWatcher", self._posWatcher);
+        });
     },
 
     actions: {
         getPos() {
-            let self = this;
-            this.get('geolocation').getLocation().then(function(geoObject) {
-                self.set("lat", geoObject.coords.latitude);
-                self.set("lng", geoObject.coords.longitude);
-                self.set("own", [geoObject.coords.latitude, geoObject.coords.longitude]);
+            this.toggleProperty("watchPos");
 
-                self.get("map").setView(self.get("own"), self.get("zoom"));
-            });
+            if(this.get("watchPos")){
+                console.log("start watch");
+                this.getPos();
+            } else {
+                console.log("stop watch");
+                Ember.run.cancel(this.get("_posWatcher"));
+                this.get("own_pos_marker").setOpacity(0);
+            }
+
         },
         zoomIn() {
             this.incrementProperty("zoom");
@@ -91,7 +179,6 @@ export default Ember.Component.extend({
         },
         updateCenter(e) {
             let center = e.target.getCenter();
-            console.log(e.target.getZoom());
             this.set('lat', center.lat);
             this.set('lng', center.lng);
             this.set('zoom', e.target.getZoom());

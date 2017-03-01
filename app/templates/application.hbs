@@ -13,7 +13,7 @@
             {{/paper-toolbar}}
             {{#paper-content padding=true}}
                 {{#paper-list}}
-                    {{#paper-item onClick=(action "toggleShare") as |controls|}}
+                    {{#paper-item as |controls|}}
                         {{paper-icon "network-wifi"}}
                         <p>Jaa oma sijainti</p>
                         {{controls.switch secondary=true value=locationshare.enabled onChange=(action (mut locationshare.enabled))}}
