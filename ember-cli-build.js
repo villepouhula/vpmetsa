@@ -32,8 +32,10 @@ module.exports = function (defaults) {
     app.import('vendor/leaflet/leaflet-src.js');
     app.import('vendor/leaflet/leaflet.css');
     app.import('vendor/proj4/proj4js-compressed.js');
-    app.import('vendor/proj4/proj4.js');    
+    app.import('vendor/proj4/proj4.js');
     app.import('vendor/proj4leaflet/proj4leaflet.js');
+
+    app.import('bower_components/moment/moment.js');
 
     return app.toTree();
 };

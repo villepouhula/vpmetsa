@@ -38,7 +38,8 @@ export default Ember.Service.extend({
     saveLocation: function(coords) {
         let data = {
             user: "Ville",
-            loc: [coords.longitude, coords.latitude]
+            loc: [coords.longitude, coords.latitude],
+            date: moment().format()
         };
         $.post( config.APP.API_URL+"locations", data)
             .done (function( result ) {
