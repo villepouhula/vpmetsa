@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
         this.get('geolocation').getLocation().then(function(geoObject) {
             self.set("lat", geoObject.coords.latitude);
             self.set("lng", geoObject.coords.longitude);
-            self.set("own", [geoObject.coords.latitude, geoObject.coords.longitude])
+            self.set("own", [geoObject.coords.latitude, geoObject.coords.longitude]);
         });
     },
 

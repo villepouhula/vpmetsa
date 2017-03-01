@@ -1,0 +1,46 @@
+import Ember from 'ember';
+import config from '../config/environment';
+
+export default Ember.Service.extend({
+    geolocation: Ember.inject.service(),
+    enabled: false,
+
+    updateLocation: Ember.observer( "enabled", function (){
+        if(this.get("enabled")){
+            this._loopItem = Ember.run.later(this, () => {
+                this.updatePosition();
+            }, 2000);
+            this.set("_loopItem",this._loopItem);
+        } else {
+            this._loopItem = this.get("_loopItem");
+            Ember.run.cancel(this._loopItem);
+        }
+    }),
+
+    updatePosition: function() {
+        let self = this;
+        this._loopItem = Ember.run.later(this, () => {
+
+            this.get('geolocation').getLocation().then(function(geoObject) {
+                console.log(geoObject.coords);
+                self.saveLocation(geoObject.coords);
+            });
+
+            this.updatePosition();
+        }, 2000);
+
+        this.set("_loopItem", this._loopItem);
+    },
+
+    saveLocation: function(coords) {
+        let data = {
+            user: "Ville",
+            loc: [coords.longitude, coords.latitude]
+        };
+        $.post( config.APP.API_URL+"locations", data)
+            .done (function( result ) {
+                console.log(result);
+            });
+    }
+
+});

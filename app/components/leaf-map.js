@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
     geolocation: Ember.inject.service(),
+    locationshare: Ember.inject.service(),
 
     lat: 62.732420,
     lng: 29.866032,
@@ -14,7 +15,7 @@ export default Ember.Component.extend({
         this.get('geolocation').getLocation().then(function(geoObject) {
             self.set("lat", geoObject.coords.latitude);
             self.set("lng", geoObject.coords.longitude);
-            self.set("own", [geoObject.coords.latitude, geoObject.coords.longitude])
+            self.set("own", [geoObject.coords.latitude, geoObject.coords.longitude]);
         });
     },
 
@@ -53,7 +54,7 @@ export default Ember.Component.extend({
 
         this.set("map", map);
 
-        let tileUrl = 'https://{s}.kapsi.fi/mapcache/peruskartta_3067/{z}/{x}/{y}.png'
+        let tileUrl = 'https://{s}.kapsi.fi/mapcache/peruskartta_3067/{z}/{x}/{y}.png';
         let attrib = '&copy; Karttamateriaali <a href="http://www.maanmittauslaitos.fi/avoindata">Maanmittauslaitos</a>',
             tilelayer = new L.Proj.TileLayer.TMS(tileUrl, crs, {
                 maxZoom: 14,
@@ -75,7 +76,7 @@ export default Ember.Component.extend({
             this.get('geolocation').getLocation().then(function(geoObject) {
                 self.set("lat", geoObject.coords.latitude);
                 self.set("lng", geoObject.coords.longitude);
-                self.set("own", [geoObject.coords.latitude, geoObject.coords.longitude])
+                self.set("own", [geoObject.coords.latitude, geoObject.coords.longitude]);
 
                 self.get("map").setView(self.get("own"), self.get("zoom"));
             });

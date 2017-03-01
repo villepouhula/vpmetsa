@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'metsa2020',
+    podModulePrefix: 'metsa2020/pods',
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
@@ -33,6 +34,8 @@ module.exports = function(environment) {
     }
   };
 
+  let apiurl = "http://lenovo:3333/api/";
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -55,6 +58,8 @@ module.exports = function(environment) {
   if (environment === 'production') {
 
   }
+
+  ENV.APP.API_URL = apiurl;
 
   return ENV;
 };

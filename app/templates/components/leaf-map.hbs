@@ -16,11 +16,16 @@
             {{#if shareEnabled}}jee{{/if}}
         </div>
 
-        <div class="flex-nogrow share-on-icon">
-            {{paper-icon "speaker-phone" size=40}}
-        </div>
-    </div>
+        {{#if locationshare.enabled}}
+            <div class="flex-nogrow share-on-icon">
+                {{paper-icon "speaker-phone" size=40}}
+            </div>
+        {{/if}}
 
+
+    </div>
 </div>
 
+
 <div id="map"></div>
+
