@@ -123,7 +123,7 @@ export default Ember.Component.extend({
                     if(!self.layergroup){
                         posarr.push(new L.marker(latlng, {icon: userIcon}));
                     } else {
-                        self.layergroup.addLayer(new L.marker(latlng));
+                        self.layergroup.addLayer(new L.marker(latlng, {icon: userIcon}));
                     }
 
                 });
