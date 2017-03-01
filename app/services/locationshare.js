@@ -6,8 +6,11 @@ export default Ember.Service.extend({
     enabled: false,
 
     updateLocation: Ember.observer( "enabled", function (){
+        console.log(this.get("enabled"));
         if(this.get("enabled")){
+            console.log("share enabled");
             this._loopItem = Ember.run.later(this, () => {
+                console.log("start loop");
                 this.updatePosition();
             }, 2000);
             this.set("_loopItem",this._loopItem);
@@ -20,7 +23,7 @@ export default Ember.Service.extend({
     updatePosition: function() {
         let self = this;
         this._loopItem = Ember.run.later(this, () => {
-
+            console.log("loop iteartion");
             this.get('geolocation').getLocation().then(function(geoObject) {
                 console.log(geoObject.coords);
                 self.saveLocation(geoObject.coords);
