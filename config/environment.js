@@ -34,7 +34,7 @@ module.exports = function(environment) {
     }
   };
 
-  let apiurl = "http://lenovo:3333/api/";
+  let apiurl = "https://metsa2020api.herokuapp.com/api/";
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
