@@ -73,7 +73,7 @@ export default Ember.Component.extend({
 
 
         let ownIcon = L.icon({
-            iconUrl: 'img/leaflet/male-2.png',
+            iconUrl: 'img/leaflet/own-2.png',
 
             iconSize:     [32, 37], // size of the icon
             iconAnchor:   [16, 37], // point of the icon which will correspond to marker's location
@@ -104,6 +104,12 @@ export default Ember.Component.extend({
         let self = this;
         let posarr = [];
 
+        let ownIcon = L.icon({
+            iconUrl: 'img/leaflet/male-2.png',
+
+            iconSize:     [32, 37], // size of the icon
+            iconAnchor:   [16, 37], // point of the icon which will correspond to marker's location
+        });
 
         Ember.$.get( config.APP.API_URL+"findUsers", data)
             .done (function( result ) {
