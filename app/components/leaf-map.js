@@ -134,7 +134,7 @@ export default Ember.Component.extend({
                     // console.log(latlng);
 
                     let marker = new L.marker(latlng, {icon: userIcon});
-                    marker.bindTooltip(row._id+"<br />"+moment(row.date).format("DD.MM.YYYY HH:mm"));
+                    marker.bindTooltip(row.username+"<br />"+moment(row.date).format("DD.MM.YYYY HH:mm"));
                     if(!self.layergroup){
                         posarr.push(marker);
                     } else {
@@ -147,9 +147,6 @@ export default Ember.Component.extend({
                     self.layergroup = new L.layerGroup(posarr).addTo(self);
                 }
 
-                self.layergroup.eachLayer(function (marker) {
-                    // marker.openTooltip();
-                });
 
             });
     },
