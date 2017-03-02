@@ -1,43 +1,47 @@
 import Ember from 'ember';
 import config from '../config/environment';
+import { storageFor } from 'ember-local-storage';
 
 export default Ember.Service.extend({
     geolocation: Ember.inject.service(),
+    userstorage: storageFor('user'),
     enabled: false,
 
     updateLocation: Ember.observer( "enabled", function (){
-        console.log(this.get("enabled"));
         if(this.get("enabled")){
-            console.log("share enabled");
-            this._loopItem = Ember.run.later(this, () => {
-                console.log("start loop");
-                this.updatePosition();
-            }, 2000);
-            this.set("_loopItem",this._loopItem);
+
+            this.positionUpdate();
+            this.startUpdateLoop();
         } else {
-            this._loopItem = this.get("_loopItem");
-            Ember.run.cancel(this._loopItem);
+            this.stopUpdateLoop();
         }
     }),
 
-    updatePosition: function() {
-        let self = this;
-        this._loopItem = Ember.run.later(this, () => {
-            console.log("loop iteartion");
-            this.get('geolocation').getLocation().then(function(geoObject) {
-                console.log(geoObject.coords);
-                self.saveLocation(geoObject.coords);
-            });
+    startUpdateLoop: function() {
 
-            this.updatePosition();
-        }, 2000);
+        this._loopItem = Ember.run.later(this, () => {
+            this.positionUpdate();
+            this.startUpdateLoop();
+        }, 60000);
 
         this.set("_loopItem", this._loopItem);
     },
 
+    positionUpdate: function() {
+        let self = this;
+        this.get('geolocation').getLocation().then(function(geoObject) {
+            self.saveLocation(geoObject.coords);
+        });
+    },
+
+    stopUpdateLoop: function() {
+        Ember.run.cancel(this.get("_loopItem"));
+    },
+
     saveLocation: function(coords) {
         let data = {
-            user: "Ville",
+            user: this.get("userstorage.userid"),
+            username: this.get("userstorage.username"),
             loc: [coords.longitude, coords.latitude],
             date: moment().format()
         };

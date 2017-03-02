@@ -17,9 +17,9 @@
 
         <div class="flex-nogrow share-on-icon">
             {{#if watchPos}}
-                <a {{action "getPos"}}>{{paper-icon "gps-fixed" size=40}}</a>
+                <a href="" {{action "getPos"}}>{{paper-icon "gps-fixed" size=40}}</a>
             {{else}}
-                <span {{action "getPos"}}>{{paper-icon "gps-off" size=40}}</span>
+                <a href="" {{action "getPos"}}>{{paper-icon "gps-off" size=40}}</a>
             {{/if}}
         </div>
 

@@ -1,3 +1,14 @@
 {{outlet}}
 
-käyttäjäasetukset
+{{top-menu title="Käyttäjäprofiili"}}
+
+{{#paper-list}}
+    {{#paper-item class="md-2-line"}}
+
+        <div class="md-list-item-text">
+            <h2>Nimimerkki</h2>
+            {{paper-input flex=30 label="Nimi" value=name onChange=(action (mut name))}}
+
+        </div>
+    {{/paper-item}}
+{{/paper-list}}

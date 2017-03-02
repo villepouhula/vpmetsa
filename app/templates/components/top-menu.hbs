@@ -1,1 +1,12 @@
-{{yield}}
+{{#paper-toolbar as |toolbar|}}
+    {{#toolbar.tools}}
+        {{#link-to "map"}}
+            {{#paper-button iconButton=true}}
+                {{paper-icon "navigate-before"}}
+            {{/paper-button}}
+        {{/link-to}}
+        <h2>{{title}}</h2>
+        <span class="flex"></span>
+
+    {{/toolbar.tools}}
+{{/paper-toolbar}}

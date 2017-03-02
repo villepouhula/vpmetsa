@@ -4,6 +4,7 @@ import config from '../config/environment';
 export default Ember.Component.extend({
     geolocation: Ember.inject.service(),
     locationshare: Ember.inject.service(),
+    settings: Ember.inject.service(),
 
     lat: 62.7660262,
     lng: 29.8923715,
@@ -50,12 +51,17 @@ export default Ember.Component.extend({
             });
 
 
-        let map = new L.Map('map', {
-            crs: crs,
-            continuousWorld: true,
-            worldCopyJump: false,
+        // let map = new L.Map('map', {
+        //     crs: crs,
+        //     continuousWorld: true,
+        //     worldCopyJump: false,
+        //     zoomControl: false
+        // });
+
+        let map = new L.Map('map',{
             zoomControl: false
         });
+
 
         this.set("map", map);
 
@@ -72,8 +78,13 @@ export default Ember.Component.extend({
             });
 
 
+        tileUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
+        tileUrl = 'http://tiles.kartat.kapsi.fi/peruskartta/{z}/{x}/{y}.jpg';
+        tileUrl = this.get("settings").get("map_tile_url");
+        tilelayer = new L.tileLayer(tileUrl);
+
         let ownIcon = L.icon({
-            iconUrl: 'img/leaflet/own-2.png',
+            iconUrl: 'img/leaflet/home-2.png',
 
             iconSize:     [32, 37], // size of the icon
             iconAnchor:   [16, 37], // point of the icon which will correspond to marker's location
@@ -111,6 +122,8 @@ export default Ember.Component.extend({
             iconAnchor:   [16, 37], // point of the icon which will correspond to marker's location
         });
 
+
+
         Ember.$.get( config.APP.API_URL+"findUsers", data)
             .done (function( result ) {
                 if(self.layergroup){
@@ -120,10 +133,12 @@ export default Ember.Component.extend({
                     let latlng = [row.loc[1],row.loc[0]];
                     // console.log(latlng);
 
+                    let marker = new L.marker(latlng, {icon: userIcon});
+                    marker.bindTooltip(row._id+"<br />"+moment(row.date).format("DD.MM.YYYY HH:mm"));
                     if(!self.layergroup){
-                        posarr.push(new L.marker(latlng, {icon: userIcon}));
+                        posarr.push(marker);
                     } else {
-                        self.layergroup.addLayer(new L.marker(latlng, {icon: userIcon}));
+                        self.layergroup.addLayer(marker);
                     }
 
                 });
@@ -131,6 +146,10 @@ export default Ember.Component.extend({
                 if(!self.layergroup){
                     self.layergroup = new L.layerGroup(posarr).addTo(self);
                 }
+
+                self.layergroup.eachLayer(function (marker) {
+                    // marker.openTooltip();
+                });
 
             });
     },

@@ -1,5 +1,35 @@
 {{outlet}}
 
-{{top-menu}}
+{{top-menu title="Asetukset"}}
 
-settingsit
+{{#paper-list}}
+    {{#paper-item class="md-2-line"}}
+
+        <div class="md-list-item-text">
+            <h2>Kartta</h2>
+            <br />
+            {{#paper-radio-group
+                groupValue=(readonly selectedMap)
+                onChange=(action (mut selectedMap)) as |group|}}
+                {{#group.radio value="peruskartta" primary=true}} MML Peruskartta {{/group.radio}}
+                {{#group.radio value="taustakartta"}} MML Taustakartta {{/group.radio}}
+                {{#group.radio value="ortoilmakuva"}} MML Ortoilmakuva {{/group.radio}}
+            {{/paper-radio-group}}
+        </div>
+    {{/paper-item}}
+    {{paper-divider}}
+    {{#paper-item class="md-2-line"}}
+
+        <div class="md-list-item-text">
+            <h2>Sijainnin päivitys</h2>
+            <br />
+            {{#paper-radio-group
+                groupValue=(readonly selectedMap)
+                onChange=(action (mut selectedMap)) as |group|}}
+                {{#group.radio value="1" primary=true}} 1min {{/group.radio}}
+                {{#group.radio value="3"}} 3min {{/group.radio}}
+                {{#group.radio value="5"}} 5min {{/group.radio}}
+            {{/paper-radio-group}}
+        </div>
+    {{/paper-item}}
+{{/paper-list}}
