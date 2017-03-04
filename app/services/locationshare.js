@@ -47,7 +47,7 @@ export default Ember.Service.extend({
         };
         $.post( config.APP.API_URL+"locations", data)
             .done (function( result ) {
-                console.log(result);
+                // console.log(result);
             });
     }
 

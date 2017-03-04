@@ -18,8 +18,13 @@
             {{#paper-list}}
                 {{#paper-item as |controls|}}
                     {{paper-icon "network-wifi"}}
-                        <p>Jaa oma sijainti</p>
+                        <p>Jaa oma sijainti muille</p>
                     {{controls.switch secondary=true value=locationshare.enabled onChange=(action (mut locationshare.enabled))}}
+                {{/paper-item}}
+                {{#paper-item as |controls|}}
+                    {{paper-icon "network-wifi"}}
+                    <p>Seuraa omaa sijaintia</p>
+                    {{controls.switch secondary=true value=watchPos onChange=(action (mut watchPos))}}
                 {{/paper-item}}
 
                 {{paper-divider}}
@@ -37,7 +42,7 @@
         {{/paper-content}}
     {{/paper-sidenav}}
 
-    {{leaf-map}}
+    {{leaf-map watchPos=watchPos}}
 
 {{/paper-sidenav-container}}
 </div>

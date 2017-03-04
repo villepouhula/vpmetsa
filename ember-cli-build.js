@@ -29,11 +29,11 @@ module.exports = function (defaults) {
     // please specify an object with the list of modules as keys
     // along with the exports of each module as its value.
 
-    app.import('vendor/leaflet/leaflet-src.js');
-    app.import('vendor/leaflet/leaflet.css');
-    app.import('vendor/proj4/proj4js-compressed.js');
-    app.import('vendor/proj4/proj4.js');
-    app.import('vendor/proj4leaflet/proj4leaflet.js');
+    app.import('vendor/leaflet.new/leaflet-src.js');
+    app.import('vendor/leaflet.new/leaflet.css');
+    //app.import('vendor/proj4/proj4js-compressed.js');
+    //app.import('vendor/proj4/proj4.js');
+    //app.import('vendor/proj4leaflet/proj4leaflet.js');
 
     app.import('bower_components/moment/moment.js');
 
