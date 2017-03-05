@@ -7,11 +7,11 @@ module.exports = function (defaults) {
         // Add options here
         fingerprint: {
             exclude: [
-                'images/layers-2x.png',
-                'images/layers.png',
-                'images/marker-icon-2x.png',
-                'images/marker-icon.png',
-                'images/marker-shadow.png'
+                'public/img/leaflet/layers-2x.png',
+                'public/img/leaflet/layers.png',
+                'public/img/leaflet/marker-icon-2x.png',
+                'public/img/leaflet/marker-icon.png',
+                'public/img/leaflet/marker-shadow.png'
             ]
         }
     });
