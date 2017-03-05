@@ -9,6 +9,11 @@ export default Ember.Controller.extend({
 
     showDialog: Ember.computed("userstorage.userid", function(){
         let self = this;
+
+        if(!this.get("userstorage.userid")){
+            return true;
+        }
+
         if(this.get("userstorage.userid")){
             return false;
         } else {
