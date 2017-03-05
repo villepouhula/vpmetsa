@@ -155,10 +155,9 @@ export default Ember.Component.extend({
                             iconUrl: userpicUrl,
 
                             iconSize: [32, 32],
-                            iconAnchor: [16, 45],
+                            iconAnchor: [16, 0],
                             className: 'fb-usericon-map'
                         });
-                        marker2 = new L.marker(latlng);
                     } else {
                         userIcon = L.icon({
                             iconUrl: 'img/leaflet/user.png',
