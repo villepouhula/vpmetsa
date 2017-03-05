@@ -13,9 +13,11 @@ export default Ember.Component.extend({
 
     init: function(){
         this._super();
-        L.Icon.Default.imagePath = 'img/leaflet';
+        L.Icon.Default.imagePath = 'img/leaflet/';
     },
     didInsertElement: function() {
+
+
 
 
         // var crs = new L.Proj.CRS.TMS('EPSG:3067',
@@ -144,12 +146,48 @@ export default Ember.Component.extend({
                 result.forEach(function (row) {
                     let latlng = [row.loc[1], row.loc[0]];
 
+                    let marker2 = false;
+                    if(row.fbuser) {
+                        var userpicUrl = "https://graph.facebook.com/v2.8/" + row._id + "/picture?type=small";
+
+
+                        userIcon = L.icon({
+                            iconUrl: userpicUrl,
+
+                            iconSize: [32, 32],
+                            iconAnchor: [16, 45],
+                            className: 'fb-usericon-map'
+                        });
+                        marker2 = new L.marker(latlng);
+                    } else {
+                        userIcon = L.icon({
+                            iconUrl: 'img/leaflet/user.png',
+
+                            iconSize:     [32, 32], // size of the icon
+                            iconAnchor:   [16, 32], // point of the icon which will correspond to marker's location
+                        });
+                    }
+
                     let marker = new L.marker(latlng, { icon: userIcon });
 
-                    marker.bindTooltip(row.username + "<br />" + moment(row.date).format("DD.MM.YYYY HH:mm"));
+
+                    var toolTipText = '<b>'+row.username+'</b><br/>';
+                    if(row.activity){
+                        toolTipText += row.activity+'<br />';
+                    }
+                    toolTipText += '<i>'+ moment(row.date).format("DD.MM.YYYY HH:mm") + '</i>';
+                    marker.bindTooltip(toolTipText);
+
+
                     if (!self.layergroup) {
+                        if(marker2) {
+                            posarr.push(marker2);
+                        }
                         posarr.push(marker);
                     } else {
+                        if(marker2) {
+                            self.layergroup.addLayer(marker2);
+                        }
                         self.layergroup.addLayer(marker);
                     }
                 });
@@ -201,6 +239,7 @@ export default Ember.Component.extend({
     },
 
     watchPosObs: Ember.observer("watchPos", function(){
+
         if(this.get("watchPos")){
             this.getPos();
         } else {

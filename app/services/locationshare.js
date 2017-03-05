@@ -7,9 +7,15 @@ export default Ember.Service.extend({
     userstorage: storageFor('user'),
     enabled: false,
 
-    updateLocation: Ember.observer( "enabled", function (){
-        if(this.get("enabled")){
+    activity: "",
 
+
+    updateLocation: Ember.observer( "enabled", "activity", function (){
+
+        if(this.get("activity") == ""){
+            return;
+        }
+        if(this.get("enabled") && this.get("activity")){
             this.positionUpdate();
             this.startUpdateLoop();
         } else {
@@ -36,6 +42,7 @@ export default Ember.Service.extend({
 
     stopUpdateLoop: function() {
         Ember.run.cancel(this.get("_loopItem"));
+        this.set("activity", "");
     },
 
     saveLocation: function(coords) {
@@ -43,7 +50,9 @@ export default Ember.Service.extend({
             user: this.get("userstorage.userid"),
             username: this.get("userstorage.username"),
             loc: [coords.longitude, coords.latitude],
-            date: moment().format()
+            date: moment().format(),
+            fbuser: this.get("userstorage.fb"),
+            activity: this.get("activity")
         };
         $.post( config.APP.API_URL+"locations", data)
             .done (function( result ) {

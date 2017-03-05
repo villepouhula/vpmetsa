@@ -31,6 +31,12 @@ module.exports = function(environment) {
       'connect-src': "'self'",
       'img-src': "'self' data:",
       'media-src': "'self'"
+    },
+
+    FB: {
+        appId: '274407192991900',
+        version: 'v2.7',
+        xfbml: true
     }
   };
 
@@ -42,7 +48,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS = true;
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
-      apiurl = "https://192.168.1.2:3333/api/";
+      apiurl = "https://localhost:3333/api/";
   }
 
   if (environment === 'test') {
@@ -59,6 +65,8 @@ module.exports = function(environment) {
   if (environment === 'production') {
 
   }
+
+
 
   ENV.APP.API_URL = apiurl;
 

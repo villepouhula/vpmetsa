@@ -6,9 +6,25 @@
     {{#paper-item class="md-2-line"}}
 
         <div class="md-list-item-text">
-            <h2>Nimimerkki</h2>
-            {{paper-input flex=30 label="Nimi" value=name onChange=(action (mut name))}}
-
+            <h2>Nimi</h2>
+            {{paper-input flex=30 label="Nimi" disabled=loggedInFacebook value=userstorage.username onChange=(action (mut userstorage.username))}}
         </div>
     {{/paper-item}}
+
+
+    {{#if loggedInFacebook}}
+        {{#paper-item class="md-2-line"}}
+        <div class="md-list-item-text">
+            Olet kirjautunut Facebook-tunnuksillasi
+        </div>
+        {{/paper-item}}
+    {{/if}}
+
+    {{#paper-item class="md-2-line"}}
+        <div class="md-list-item-text">
+        {{#paper-button onClick=(action "logOut") raised=true warn=true}}{{fa-icon "sign-out"}} &nbsp; Kirjaudu ulos{{/paper-button}}
+        </div>
+    {{/paper-item}}
+
+
 {{/paper-list}}

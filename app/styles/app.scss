@@ -63,5 +63,12 @@ body {
     md-icon {
         color: #6ae268;
     }
+}
 
+.fb-usericon-map {
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    border: 0px solid #000000;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

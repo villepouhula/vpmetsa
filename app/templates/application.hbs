@@ -1,19 +1,32 @@
 {{outlet}}
 
 {{#if showDialog}}
-{{#paper-dialog fullscreen=fullscreen onClose=(action "closePromptDialog" "cancel") origin=dialogOrigin}}
 
-    {{#paper-dialog-content}}
-        <h2 class="md-title">Tervetuloa VPMetsä-käyttäjäksi!</h2>
-        <p>Kerro ensin kuka olet.</p>
-        {{paper-input placeholder="Nimesi" autofocus=true value=name onChange=(action (mut name))}}
+    {{#paper-dialog fullscreen=fullscreen onClose=(action "closePromptDialog" "cancel") origin=dialogOrigin}}
 
-    {{/paper-dialog-content}}
+        {{#paper-dialog-content}}
+            <h2 class="md-title">Tervetuloa VPMetsä-käyttäjäksi!</h2>
 
-    {{#paper-dialog-actions class="layout-row"}}
-        <span class="flex"></span>
-        {{#paper-button primary=true onClick=(action "closePromptDialog" "ok")}}Aloita!{{/paper-button}}
-    {{/paper-dialog-actions}}
+            <div class="layout-row layout-margin">Kirjaudu Facebook-tunnuksillasi:</div>
+            <div class="layout-row layout-margin">
+                <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="true" data-auto-logout-link="true" onlogin="loginFinished();"></div>
+            </div>
 
-{{/paper-dialog}}
+            <br />
+            {{paper-divider}}
+            <br />
+
+            <div class="layout-row layout-margin">Tai anna vain nimesi:</div>
+            <div class="layout-row layout-margin">{{paper-input placeholder="Nimesi" autofocus=true value=name onChange=(action (mut name))}}</div>
+
+        {{/paper-dialog-content}}
+
+
+        {{#paper-dialog-actions class="layout-row"}}
+            <span class="flex"></span>
+            {{#paper-button primary=true onClick=(action "closePromptDialog" "ok")}}Aloita!{{/paper-button}}
+        {{/paper-dialog-actions}}
+
+    {{/paper-dialog}}
 {{/if}}
+

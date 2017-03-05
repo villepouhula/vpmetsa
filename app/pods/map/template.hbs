@@ -17,13 +17,13 @@
         {{#paper-content padding=true}}
             {{#paper-list}}
                 {{#paper-item as |controls|}}
-                    {{paper-icon "network-wifi"}}
-                        <p>Jaa oma sijainti muille</p>
+                    {{paper-icon "speaker-phone"}}
+                        <p>Jaa sijainti</p>
                     {{controls.switch secondary=true value=locationshare.enabled onChange=(action (mut locationshare.enabled))}}
                 {{/paper-item}}
                 {{#paper-item as |controls|}}
-                    {{paper-icon "network-wifi"}}
-                    <p>Seuraa omaa sijaintia</p>
+                    {{paper-icon "my-location"}}
+                    <p>Keskitä kartta</p>
                     {{controls.switch secondary=true value=watchPos onChange=(action (mut watchPos))}}
                 {{/paper-item}}
 
@@ -33,11 +33,15 @@
                     {{paper-icon "account-circle"}}
                         <p>Käyttäjä</p>
                 {{/paper-item}}
-
-                {{#paper-item onClick=(action "transitionToSettings")}}
-                    {{paper-icon "settings"}}
-                        <p>Asetukset</p>
+                {{#paper-item onClick=(action "transitionToCredits")}}
+                    {{paper-icon "info-circle"}}
+                    <p>Tietoja</p>
                 {{/paper-item}}
+
+                {{!--{{#paper-item onClick=(action "transitionToSettings")}}--}}
+                    {{!--{{paper-icon "settings"}}--}}
+                        {{!--<p>Asetukset</p>--}}
+                {{!--{{/paper-item}}--}}
             {{/paper-list}}
         {{/paper-content}}
     {{/paper-sidenav}}
@@ -65,3 +69,21 @@
     {{/marker-layer}}
 {{/leaflet-map}}
 --}}
+
+{{#if locationshare.enabled}}
+    {{#unless locationshare.activity}}
+        {{#paper-dialog}}
+            {{#paper-dialog-content}}
+                <h2 class="md-title">Kerro vielä mitä teet?</h2>
+                <p>(esim. marjastus)</p>
+                {{paper-input placeholder="aktiviteetti" autofocus=true value=activity onChange=(action (mut activity))}}
+
+            {{/paper-dialog-content}}
+
+            {{#paper-dialog-actions class="layout-row"}}
+                <span class="flex"></span>
+                {{#paper-button primary=true onClick=(action "closeActivityDialog")}}Jatka!{{/paper-button}}
+            {{/paper-dialog-actions}}
+        {{/paper-dialog}}
+    {{/unless}}
+{{/if}}
