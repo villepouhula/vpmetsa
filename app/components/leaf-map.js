@@ -75,8 +75,11 @@ export default Ember.Component.extend({
         // tileUrl = 'http://{s}.tile.osm.org/{z}/{x}/{y}.png';
         // tileUrl = 'http://tiles.kartat.kapsi.fi/peruskartta/{z}/{x}/{y}.jpg';
         // tileUrl = this.get("settings").get("map_tile_url");
-        var tileUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
-        var tilelayer = new L.tileLayer(tileUrl);
+        // var tileUrl = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
+        var tileUrl = 'https://{s}.kapsi.fi/peruskartta/{z}/{x}/{y}.png';
+        var tilelayer = new L.tileLayer(tileUrl, {
+            subdomains: ['tile1', 'tile2']
+        });
 
         map.addLayer(tilelayer);
 

@@ -10,15 +10,17 @@ export default Ember.Controller.extend({
     showDialog: Ember.computed("userstorage.userid", function(){
         let self = this;
 
-        if(!this.get("userstorage.userid")){
-            return true;
-        }
+
+        // if(!this.get("userstorage.userid")){
+        //     return true;
+        // }
 
         if(this.get("userstorage.userid")){
             return false;
         } else {
             this.get('fb').getLoginStatus().then( function(response)  {
 
+                console.log("conn");
                 //get userid and name
                 if(response.status === "connected"){
                     self.get('fb').api('/me').then(function(me){
